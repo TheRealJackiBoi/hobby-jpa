@@ -4,6 +4,7 @@ import config.HibernateConfig;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.TypedQuery;
 import model.Phonenumber;
+import model.Users;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +19,9 @@ public class PhoneNumberDAO {
         EntityManagerFactory emf = EMF.getInstance();
         try(var em = emf.createEntityManager()) {
             em.getTransaction().begin();
+            Users users = em.find(Users.class, id);
             TypedQuery<Phonenumber> typedQuery = em.createNamedQuery("PhoneNumber.getAllUsersPhoneNumbers", Phonenumber.class);
-            phonenumbers = typedQuery.setParameter(1, id).getResultList();
+            phonenumbers = typedQuery.setParameter(1, users).getResultList();
             em.getTransaction().commit();
             return phonenumbers;
         }
