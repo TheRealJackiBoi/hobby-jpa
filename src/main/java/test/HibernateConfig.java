@@ -1,4 +1,4 @@
-package config;
+package test;
 
 import jakarta.persistence.EntityManagerFactory;
 import lombok.NoArgsConstructor;

@@ -20,7 +20,7 @@ public class Phonenumber {
     private PhoneType type;
 
     @ManyToMany(mappedBy = "phonenumbers")
-    private Set<User> users;
+    private Set<Users> users;
 
 
     public Phonenumber(String number, PhoneType type) {
