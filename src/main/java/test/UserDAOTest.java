@@ -32,7 +32,6 @@ class UserDAOTest {
         Users testUsers = new Users("TestName", "TestPassword", testAddress);
         Hobby testHobby = new Hobby("TestName",  Hobby.HobbyType.INDOOR, "","Generel");
         testUsers.addHobby(testHobby, BEGINNER);
-        UserDAO userDAO = new UserDAO();
 
         try (var em = EMFTest.getInstance().createEntityManager()) {
             em.getTransaction().begin();
