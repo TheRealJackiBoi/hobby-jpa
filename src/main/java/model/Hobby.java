@@ -9,6 +9,9 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @Table(name = "hobby")
+@NamedQueries({
+        @NamedQuery(name = "Hobby.getAllHobbies", query = "SELECT h FROM Hobby h")
+})
 @Entity
 public class Hobby {
 
@@ -38,7 +41,8 @@ public class Hobby {
 
     public enum HobbyType {
         INDOOR,
-        OUTDOOR
+        OUTDOOR,
+
     }
 
 }
