@@ -41,7 +41,8 @@ public class Hobby {
 
     public enum HobbyType {
         INDOOR,
-        OUTDOOR
+        OUTDOOR,
+
     }
 
 }

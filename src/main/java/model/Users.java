@@ -3,7 +3,7 @@ package model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -26,15 +26,23 @@ public class Users {
     @ManyToOne
     private Address address;
 
-    @OneToMany(mappedBy = "user")
-    private Set<UserHobbyLink> userHobbyLinks;
+    @OneToMany(mappedBy = "users")
+    private Set<UserHobbyLink> userHobbyLinks = new HashSet<>();
 
     @ManyToMany
-    private Set<Phonenumber> phonenumbers;
+    private Set<Phonenumber> phonenumbers = new HashSet<>();
 
     public Users(String name, String password, Address address) {
         this.name = name;
         this.password = password;
         this.address = address;
+    }
+
+    public void addPhonenumber(Phonenumber phone) {
+        phonenumbers.add(phone);
+    }
+
+    public void addHobby(Hobby hobby, UserHobbyLink.Experience experience) {
+        userHobbyLinks.add(new UserHobbyLink(experience, hobby, this));
     }
 }
