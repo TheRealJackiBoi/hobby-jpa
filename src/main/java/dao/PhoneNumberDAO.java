@@ -12,6 +12,7 @@ public class PhoneNumberDAO {
 
 
     //US-2 - As a user i want to get all the phone numbers from a given person
+    //TODO: test
     public List<Phonenumber> getAllNumbersBelongingToAPerson(int id){
         List<Phonenumber> phonenumbers = new ArrayList<>();
         EntityManagerFactory emf = EMF.getInstance();
