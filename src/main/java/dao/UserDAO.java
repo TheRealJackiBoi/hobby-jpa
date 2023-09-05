@@ -1,6 +1,5 @@
 package dao;
 
-<<<<<<< Updated upstream
 import jakarta.persistence.TypedQuery;
 import config.HibernateConfig;
 import jakarta.persistence.EntityManager;
@@ -8,17 +7,6 @@ import jakarta.persistence.EntityManagerFactory;
 import model.Users;
 
 import java.util.List;
-
-public class UserDAO {
-
-    private static UserDAO instance;
-    private static EntityManagerFactory emf;
-
-    private UserDAO() {
-=======
-import jakarta.persistence.EntityManagerFactory;
-import model.Hobby;
-import model.Users;
 
 public class UserDAO {
 
@@ -68,7 +56,6 @@ public class UserDAO {
             em.getTransaction().commit();
             return updatedUser;
         }
->>>>>>> Stashed changes
     }
 
     public static UserDAO getInstance() {
