@@ -22,6 +22,42 @@ public class HobbyDAO {
         return instance;
     }
 
+    public void persistHobby(Hobby hobby){
+        try(var em = emf.createEntityManager()){
+            em.getTransaction().begin();
+            em.persist(hobby);
+            em.getTransaction().commit();
+        }
+    }
+
+    public Hobby findHobbyByName(String name){
+        try(var em = emf.createEntityManager()){
+            em.getTransaction().begin();
+            Hobby foundHobby = em.find(Hobby.class, name);
+            em.getTransaction().commit();
+            return foundHobby;
+        }
+    }
+
+    public void deleteHobbyByName(String hobbyname){
+        try(var em = emf.createEntityManager()){
+            em.getTransaction().begin();
+            Hobby foundHobby = findHobbyByName(hobbyname);
+            em.remove(foundHobby);
+            em.getTransaction().commit();
+        }
+    }
+
+    public Hobby updateHobbyByHobbyName(String oldHobbyName, Hobby newHobby){
+        try(var em = emf.createEntityManager()){
+            em.getTransaction().begin();
+            Hobby foundhobby = findHobbyByName(oldHobbyName);
+            Hobby updatedHobby= em.merge(newHobby);
+            em.getTransaction().commit();
+            return updatedHobby;
+        }
+    }
+
     //US-5 get a list of all the hobbies
     //TODO: test
     public List<Hobby> getAllHobbies(){

@@ -1,5 +1,6 @@
 package dao;
 
+<<<<<<< Updated upstream
 import jakarta.persistence.TypedQuery;
 import config.HibernateConfig;
 import jakarta.persistence.EntityManager;
@@ -14,6 +15,60 @@ public class UserDAO {
     private static EntityManagerFactory emf;
 
     private UserDAO() {
+=======
+import jakarta.persistence.EntityManagerFactory;
+import model.Hobby;
+import model.Users;
+
+public class UserDAO {
+
+    private static EntityManagerFactory emf;
+
+    private static UserDAO instance;
+
+    public static UserDAO getInstance(EntityManagerFactory _emf){
+        if(instance == null) {
+            emf = _emf;
+            instance = new UserDAO();
+        }
+        return instance;
+    }
+
+    public void persistUser(Users users){
+        try(var em = emf.createEntityManager()){
+            em.getTransaction().begin();
+            em.persist(users);
+            em.getTransaction().commit();
+        }
+    }
+
+    public Users findUserByName(String name){
+        try(var em = emf.createEntityManager()){
+            em.getTransaction().begin();
+            Users foundUser = em.find(Users.class, name);
+            em.getTransaction().commit();
+            return foundUser;
+        }
+    }
+
+    public void deleteUserByName(String username){
+        try(var em = emf.createEntityManager()){
+            em.getTransaction().begin();
+            Users foundUser = findUserByName(username);
+            em.remove(foundUser);
+            em.getTransaction().commit();
+        }
+    }
+
+    public Users updateUserByUserName(String userName, Users newUser){
+        try(var em = emf.createEntityManager()){
+            em.getTransaction().begin();
+            Users foundUser = findUserByName(userName);
+            Users updatedUser = em.merge(foundUser);
+            em.getTransaction().commit();
+            return updatedUser;
+        }
+>>>>>>> Stashed changes
     }
 
     public static UserDAO getInstance() {
