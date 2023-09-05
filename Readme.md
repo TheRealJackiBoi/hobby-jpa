@@ -6,6 +6,9 @@ Our plan is to make the next matching app but for hobbies. You will get an overv
 ## Domain model
 ![Domain model](https://cdn.discordapp.com/attachments/1037341246152257666/1148547336914616391/IMG_5872.jpg)
 
+## EER-Diagram
+![EER-Diagram](https://cdn.discordapp.com/attachments/1037341246152257666/1148548986442100766/20230904_114323.jpg)
+
 ## Technical requirements
 - JPA
 - JPQL
