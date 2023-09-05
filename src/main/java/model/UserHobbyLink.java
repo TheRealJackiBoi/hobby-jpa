@@ -29,7 +29,7 @@ public class UserHobbyLink {
         private Hobby hobby;
 
         @ManyToOne
-        private User user;
+        private Users user;
 
     public UserHobbyLink(Experience experience) {
         this.experience = experience;
