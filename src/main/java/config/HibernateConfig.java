@@ -2,6 +2,7 @@ package config;
 
 import jakarta.persistence.EntityManagerFactory;
 import lombok.NoArgsConstructor;
+import model.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -57,7 +58,12 @@ public class HibernateConfig {
 
     private static void getAnnotationConfiguration(Configuration configuration) {
         // add annotated classes
-
+        configuration.addAnnotatedClass(Address.class);
+        configuration.addAnnotatedClass(City.class);
+        configuration.addAnnotatedClass(Hobby.class);
+        configuration.addAnnotatedClass(Phonenumber.class);
+        configuration.addAnnotatedClass(UserHobbyLink.class);
+        configuration.addAnnotatedClass(Users.class);
     }
 
     public static EntityManagerFactory getEntityManagerFactoryConfig(String name) {
