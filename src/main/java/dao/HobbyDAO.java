@@ -1,11 +1,16 @@
 package dao;
 
+
+import jakarta.persistence.EntityManager;
+import config.HibernateConfig;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.TypedQuery;
 import model.Hobby;
+import model.User;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class HobbyDAO {
@@ -20,6 +25,18 @@ public class HobbyDAO {
             instance = new HobbyDAO();
         }
         return instance;
+    }
+
+
+    public List<User> findAllUsersWithGivenHoby(String hobby) {
+        try (EntityManager em = emf.createEntityManager()){
+            List<User> users = em.createQuery("SELECT u FROM Users u WHERE u.hobby.name = :hobby", User.class)
+                    .setParameter("hobby", hobby)
+                    .getResultList();
+            return users;
+
+        }
+
     }
 
     public void persistHobby(Hobby hobby){
