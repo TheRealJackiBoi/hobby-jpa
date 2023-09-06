@@ -64,7 +64,6 @@ public class PhoneNumberDAO {
     //TODO: test
     public List<Phonenumber> getAllNumbersBelongingToAPerson(int id){
         List<Phonenumber> phonenumbers = new ArrayList<>();
-        EntityManagerFactory emf = EMF.getInstance();
         try(var em = emf.createEntityManager()) {
             em.getTransaction().begin();
             Users users = em.find(Users.class, id);

@@ -4,6 +4,8 @@ import jakarta.persistence.TypedQuery;
 import config.HibernateConfig;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import model.Hobby;
+import model.UserHobbyLink;
 import model.Users;
 
 import java.util.List;
@@ -67,11 +69,26 @@ public class UserDAO {
     }
   
   //[US-1] As a user I want to get all the information about a person
-    public Users retrieveAllUserInfo(Users users) {
+    // TODO: Change this method to be similar to {@link #retrieveAllUserInfo(Users)}
+    public List<UsersNameAddressHobbiesNumbersDTO> retrieveAllUserInfo(Users users) {
         try (var em = emf.createEntityManager()) {
-            TypedQuery<Users> query = em.createQuery("SELECT u FROM Users u WHERE u.id = :id", Users.class);
-            query.setParameter("id", users.getId());
-            return query.getSingleResult();
+            TypedQuery<UsersNameAddressHobbiesNumbersDTO> q = em.createQuery("SELECT new dao.UsersNameAddressHobbiesNumbersDTO(u.name," +
+                    " u.address," +
+                    " u.userHobbyLinks," +
+                    " u.phonenumbers) " +
+                    "FROM Users u " +
+                    "WHERE u.id = :id", UsersNameAddressHobbiesNumbersDTO.class);
+            q.setParameter("id", users.getId());
+            return q.getResultList();
+        }
+    }
+
+    //[US-4] As a user I want to get the number of people with a given hobby
+    public int numberOfPeopleWithHobby(Hobby hobby) {
+        try (var em = emf.createEntityManager()) {
+            TypedQuery<UserHobbyLink> query = em.createQuery("SELECT COUNT(hobby) FROM UserHobbyLink l WHERE l.hobby.id = :hobby", UserHobbyLink.class);
+            query.setParameter("hobby", hobby);
+            return query.getResultList().size();
         }
     }
 
