@@ -76,9 +76,11 @@ public class UserDAOTest {
 
         Hobby testHobby = new Hobby("TestHobby", Hobby.HobbyType.INDOOR, "", "Generel");
 
+
         Users user1 = new Users("TestUsername1", "TestPassword1", null);
         Users user2 = new Users("TestUsername2", "TestPassword2", null);
         Users user3 = new Users("TestUsername3", "TestPassword3", null);
+
 
         UserHobbyLink userHobbyLink1 = new UserHobbyLink(LocalDate.now(), testHobby, BEGINNER, user1);
         UserHobbyLink userHobbyLink2 = new UserHobbyLink(LocalDate.now(), testHobby, INTERMEDIATE, user2);
@@ -104,5 +106,6 @@ public class UserDAOTest {
         // Assert that the result is the same as the test entities, confirming that all the information is retrieved properly
         System.out.println(user1.getUserHobbyLinks());
         Assert.assertEquals(result, 3);
+
     }
 }

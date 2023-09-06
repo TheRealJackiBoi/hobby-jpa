@@ -30,7 +30,11 @@ public class HobbyDAO {
 
     public List<Users> findAllUsersWithGivenHoby(String hobby) {
         try (EntityManager em = emf.createEntityManager()){
-            List<Users> users = em.createQuery("SELECT u FROM Users u WHERE u.hobby.name = :hobby", Users.class)
+
+            List<Users> users = em.createQuery("SELECT u FROM Users u " +
+                            "JOIN UserHobbyLink h " +
+                            "WHERE u.id = h.users.id " +
+                            "AND h.hobby.name = :hobby", Users.class)
                     .setParameter("hobby", hobby)
                     .getResultList();
             return users;
