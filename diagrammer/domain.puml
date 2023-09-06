@@ -1,0 +1,52 @@
+@startuml
+
+Class User{
+    String name
+    String password
+    int id
+    adress = id
+}
+
+Class Hobby{
+    String name
+    String link
+    String type
+    String category
+}
+
+Class Adress{
+    int id
+    String roadname
+    String housenumber
+    String floor
+    int zip
+}
+
+Class PhoneNumber{
+    String number
+    PhoneType type
+    int user_id
+
+}
+Class City {
+    int zip
+    String adress
+    String city
+    String region
+    String municipality
+}
+
+CLass UserHobyLink {
+    Int user_id
+    Enum Experience
+    LocalDate signupDate
+    String HobbyName
+}
+
+User "*" *-- "*" Hobby
+User "*" *-- "1" Adress
+User "1" *-- "*" PhoneNumber
+Adress "*" *-- "1" City
+
+
+@enduml
