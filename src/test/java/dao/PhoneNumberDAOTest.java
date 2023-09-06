@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PhoneNumberDAOTest {
 
     @BeforeAll
-    void setUp() {
+    static void setUp() {
     }
 
     @Test
