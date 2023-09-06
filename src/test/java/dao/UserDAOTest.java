@@ -35,7 +35,7 @@ public class UserDAOTest {
         Users testUsers = new Users("TestUsername", "TestPassword", testAddress);
         Hobby testHobby = new Hobby("TestHobby", Hobby.HobbyType.INDOOR, "", "Generel");
         UserHobbyLink uhl = new UserHobbyLink(LocalDate.now(), testHobby, BEGINNER, testUsers);
-        Phonenumber testPhonenumber = new Phonenumber("1122334455", Phonenumber.PhoneType.MOBILE);
+        Phonenumber testPhonenumber = new Phonenumber("1134455", Phonenumber.PhoneType.MOBILE);
 
         UserDAO userDAO = UserDAO.getInstance(EMF.getInstance("hobby_test"));
         AddressDAO addressDAO = AddressDAO.getInstance(EMF.getInstance("hobby_test"));
@@ -72,19 +72,16 @@ public class UserDAOTest {
     @Test
     void numberOfPeopleWithHobby() {
         // Create test entities
-
-
         Hobby testHobby = new Hobby("TestHobby", Hobby.HobbyType.INDOOR, "", "Generel");
-
+        Hobby testHobby2 = new Hobby("TestHobby2", Hobby.HobbyType.OUTDOOR, "", "Generel");
 
         Users user1 = new Users("TestUsername1", "TestPassword1", null);
         Users user2 = new Users("TestUsername2", "TestPassword2", null);
         Users user3 = new Users("TestUsername3", "TestPassword3", null);
 
-
         UserHobbyLink userHobbyLink1 = new UserHobbyLink(LocalDate.now(), testHobby, BEGINNER, user1);
         UserHobbyLink userHobbyLink2 = new UserHobbyLink(LocalDate.now(), testHobby, INTERMEDIATE, user2);
-        UserHobbyLink userHobbyLink3 = new UserHobbyLink(LocalDate.now(), testHobby, PROFESSIONAL, user3);
+        UserHobbyLink userHobbyLink3 = new UserHobbyLink(LocalDate.now(), testHobby2, PROFESSIONAL, user3);
 
         UserDAO userDAO = UserDAO.getInstance(EMF.getInstance("hobby_test"));
         AddressDAO addressDAO = AddressDAO.getInstance(EMF.getInstance("hobby_test"));
@@ -96,16 +93,21 @@ public class UserDAOTest {
         userDAO.persistUser(user2);
         userDAO.persistUser(user3);
         hobbyDAO.persistHobby(testHobby);
+        hobbyDAO.persistHobby(testHobby2);
         userHobbyLinkDAO.persistUserHobbyLink(userHobbyLink1);
         userHobbyLinkDAO.persistUserHobbyLink(userHobbyLink2);
         userHobbyLinkDAO.persistUserHobbyLink(userHobbyLink3);
 
         // Test method with test entities
-        int result = userDAO.numberOfPeopleWithHobby(testHobby);
+        Long result = userDAO.numberOfPeopleWithHobby("TestHobby");
+        Long result2 = userDAO.numberOfPeopleWithHobby("TestHobby2");
 
         // Assert that the result is the same as the test entities, confirming that all the information is retrieved properly
-        System.out.println(user1.getUserHobbyLinks());
-        Assert.assertEquals(result, 3);
+        Assert.assertEquals(result, 2);
+        Assert.assertNotEquals(result, 3);
+
+        Assert.assertEquals(result2, 1);
+        Assert.assertNotEquals(result2, 2);
 
     }
 }
