@@ -1,4 +1,5 @@
 package test;
+import config.HibernateConfig;
 import jakarta.persistence.EntityManagerFactory;
 
 public final class EMFTest {
