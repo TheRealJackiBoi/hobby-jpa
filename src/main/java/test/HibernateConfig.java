@@ -1,4 +1,4 @@
-package config;
+package test;
 
 import jakarta.persistence.EntityManagerFactory;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.Properties;
 
 
 @NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
-public class HibernateConfigTest {
+public class HibernateConfig {
 
     private static EntityManagerFactory entityManagerFactory;
     private static String dbName;
