@@ -3,7 +3,6 @@ package model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -41,9 +40,5 @@ public class Users {
 
     public void addPhonenumber(Phonenumber phone) {
         phonenumbers.add(phone);
-    }
-
-    public void addHobby(Hobby hobby, UserHobbyLink.Experience experience) {
-        userHobbyLinks.add(new UserHobbyLink(experience, hobby, this));
     }
 }

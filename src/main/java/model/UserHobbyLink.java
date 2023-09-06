@@ -14,6 +14,7 @@ import java.time.LocalDate;
 public class UserHobbyLink {
 
         @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "id")
         private int id;
 
@@ -31,8 +32,24 @@ public class UserHobbyLink {
         @ManyToOne
         private Users users;
 
-    public UserHobbyLink(Experience experience) {
+    public UserHobbyLink(Experience experience, LocalDate signupDate) {
         this.experience = experience;
+        this.signupDate = signupDate;
+    }
+
+    public UserHobbyLink(LocalDate signupDate, Hobby hobby, Experience experience, Users users) {
+        this.signupDate = signupDate;
+        this.hobby = hobby;
+        this.experience = experience;
+        this.users = users;
+    }
+
+    public void setUsers(Users user) {
+        this.users = user;
+    }
+
+    public void setHobby(Hobby hobby) {
+        this.hobby = hobby;
     }
 
     public enum Experience {
@@ -42,10 +59,4 @@ public class UserHobbyLink {
             EXPERT,
             PROFESSIONAL
         }
-
-    public UserHobbyLink(Experience experience, Hobby hobby, Users users) {
-        this.experience = experience;
-        this.hobby = hobby;
-        this.users = users;
-    }
 }

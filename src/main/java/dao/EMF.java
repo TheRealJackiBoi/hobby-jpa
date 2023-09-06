@@ -4,11 +4,11 @@ import config.HibernateConfig;
 import jakarta.persistence.EntityManagerFactory;
 
 public final class EMF {
-    private static final EntityManagerFactory emf = HibernateConfig.getEntityManagerFactoryConfig("hobby");
+    private static EntityManagerFactory emf;
 
-    public static EntityManagerFactory getInstance() {
+    public static EntityManagerFactory getInstance(String dbName) {
         if (emf == null) {
-            return HibernateConfig.getEntityManagerFactoryConfig("hobby");
+           emf = HibernateConfig.getEntityManagerFactoryConfig(dbName);
         }
         return emf;
     }
