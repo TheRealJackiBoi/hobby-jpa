@@ -1,4 +1,4 @@
-package test;
+package dao;
 
 import jakarta.persistence.EntityManagerFactory;
 import lombok.NoArgsConstructor;

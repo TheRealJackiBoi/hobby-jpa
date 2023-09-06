@@ -1,9 +1,10 @@
-package test;
+package dao;
 
 import dao.UserDAO;
 import model.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import test.EMFTest;
 
 import java.time.LocalDate;
 
@@ -13,12 +14,12 @@ class UserDAOTest {
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
-        EMFTest.getInstance();
+        test.EMFTest.getInstance();
     }
 
     @org.junit.jupiter.api.AfterEach
     void tearDown() {
-        EMFTest.getInstance().close();
+        test.EMFTest.getInstance().close();
     }
 
     @org.junit.jupiter.api.Test
@@ -33,7 +34,7 @@ class UserDAOTest {
         UserDAO userDAO = new UserDAO();
 
         // Perist test entities
-        try (var em = EMFTest.getInstance().createEntityManager()) {
+        try (var em = test.EMFTest.getInstance().createEntityManager()) {
             em.getTransaction().begin();
             em.persist(testCity);
             em.persist(testAddress);
@@ -42,7 +43,7 @@ class UserDAOTest {
             em.getTransaction().commit();
 
             // Test method with test entities
-            Users result = userDAO.retrieveAllUserInfo(testUsers, EMFTest.getInstance());
+            Users result = userDAO.retrieveAllUserInfo(testUsers, test.EMFTest.getInstance());
 
             // Assert that the result is the same as the test entities, confirming that all the information is retrieved properly
             System.out.println(result.getName());
@@ -85,7 +86,7 @@ class UserDAOTest {
 
         UserDAO userDAO = new UserDAO();
 
-        try(var em = EMFTest.getInstance().createEntityManager()) {
+        try(var em = test.EMFTest.getInstance().createEntityManager()) {
             em.getTransaction().begin();
             em.persist(user1);
             em.persist(user2);
