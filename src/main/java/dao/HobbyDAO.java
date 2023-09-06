@@ -6,7 +6,7 @@ import config.HibernateConfig;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.TypedQuery;
 import model.Hobby;
-import model.Users;
+import model.User;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,9 +28,9 @@ public class HobbyDAO {
     }
 
 
-    public List<Users> findAllUsersWithGivenHoby(String hobby) {
+    public List<User> findAllUsersWithGivenHoby(String hobby) {
         try (EntityManager em = emf.createEntityManager()){
-            List<Users> users = em.createQuery("SELECT u FROM Users u WHERE u.hobby.name = :hobby", Users.class)
+            List<User> users = em.createQuery("SELECT u FROM Users u WHERE u.hobby.name = :hobby", User.class)
                     .setParameter("hobby", hobby)
                     .getResultList();
             return users;
@@ -79,6 +79,7 @@ public class HobbyDAO {
     //TODO: test
     public List<Hobby> getAllHobbies(){
         List<Hobby> hobbyList;
+        EntityManagerFactory emf = EMF.getInstance();
         try(var em = emf.createEntityManager()){
             em.getTransaction().begin();
             TypedQuery<Hobby> typedQuery = em.createNamedQuery("Hobby.getAllHobbies", Hobby.class);

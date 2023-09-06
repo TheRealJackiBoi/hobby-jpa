@@ -1,14 +1,14 @@
 package dao;
 
-import config.HibernateConfigTest;
+import config.HibernateConfig;
 import jakarta.persistence.EntityManagerFactory;
 
 public final class EMFTest {
-    private static final EntityManagerFactory emf = HibernateConfigTest.getEntityManagerFactoryConfig("hobby");
+    private static final EntityManagerFactory emf = HibernateConfig.getEntityManagerFactoryConfig("hobby");
 
     public static EntityManagerFactory getInstance() {
         if (emf == null) {
-            return HibernateConfigTest.getEntityManagerFactoryConfig("hobby_test");
+            return HibernateConfig.getEntityManagerFactoryConfig("hobby_test");
         }
         return emf;
     }
