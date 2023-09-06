@@ -41,8 +41,4 @@ public class Users {
     public void addPhonenumber(Phonenumber phone) {
         phonenumbers.add(phone);
     }
-
-    public void addHobby(Hobby hobby, UserHobbyLink.Experience experience) {
-        userHobbyLinks.add(new UserHobbyLink(experience, hobby, this));
-    }
 }
