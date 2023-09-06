@@ -18,7 +18,7 @@ public class AddressDAO {
         return instance;
     }
 
-    public void persistAdress(Address address){
+    public void persistAddress(Address address){
         try(var em = emf.createEntityManager()){
             em.getTransaction().begin();
             em.persist(address);

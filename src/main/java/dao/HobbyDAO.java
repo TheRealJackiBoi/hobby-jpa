@@ -30,6 +30,7 @@ public class HobbyDAO {
 
     public List<Users> findAllUsersWithGivenHoby(String hobby) {
         try (EntityManager em = emf.createEntityManager()){
+
             List<Users> users = em.createQuery("SELECT u FROM Users u " +
                             "JOIN UserHobbyLink h " +
                             "WHERE u.id = h.users.id " +
@@ -82,7 +83,6 @@ public class HobbyDAO {
     //TODO: test
     public List<Hobby> getAllHobbies(){
         List<Hobby> hobbyList;
-        EntityManagerFactory emf = EMF.getInstance();
         try(var em = emf.createEntityManager()){
             em.getTransaction().begin();
             TypedQuery<Hobby> typedQuery = em.createNamedQuery("Hobby.getAllHobbies", Hobby.class);

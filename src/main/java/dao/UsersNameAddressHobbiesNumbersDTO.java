@@ -22,5 +22,4 @@ public class UsersNameAddressHobbiesNumbersDTO {
         this.hobbies = hobbies;
         this.phonenumbers = phonenumbers;
     }
-
 }

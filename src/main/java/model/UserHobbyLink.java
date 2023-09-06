@@ -14,6 +14,7 @@ import java.time.LocalDate;
 public class UserHobbyLink {
 
         @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "id")
         private int id;
 
