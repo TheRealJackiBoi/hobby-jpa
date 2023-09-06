@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -44,6 +45,7 @@ public class Users {
     }
 
     public void addHobby(Hobby hobby, UserHobbyLink.Experience experience) {
-        userHobbyLinks.add(new UserHobbyLink(experience, hobby, this));
+        LocalDate signupDate = LocalDate.now();
+        userHobbyLinks.add(new UserHobbyLink(signupDate, hobby, experience, (this)));
     }
 }
