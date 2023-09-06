@@ -16,24 +16,24 @@ public class UserDAO {
 
     private static UserDAO instance;
 
-    public static UserDAO getInstance(EntityManagerFactory _emf){
-        if(instance == null) {
+    public static UserDAO getInstance(EntityManagerFactory _emf) {
+        if (instance == null) {
             emf = _emf;
             instance = new UserDAO();
         }
         return instance;
     }
 
-    public void persistUser(Users users){
-        try(var em = emf.createEntityManager()){
+    public void persistUser(Users users) {
+        try (var em = emf.createEntityManager()) {
             em.getTransaction().begin();
             em.persist(users);
             em.getTransaction().commit();
         }
     }
 
-    public Users findUserByName(String name){
-        try(var em = emf.createEntityManager()){
+    public Users findUserByName(String name) {
+        try (var em = emf.createEntityManager()) {
             em.getTransaction().begin();
             Users foundUser = em.find(Users.class, name);
             em.getTransaction().commit();
@@ -41,8 +41,8 @@ public class UserDAO {
         }
     }
 
-    public void deleteUserByName(String username){
-        try(var em = emf.createEntityManager()){
+    public void deleteUserByName(String username) {
+        try (var em = emf.createEntityManager()) {
             em.getTransaction().begin();
             Users foundUser = findUserByName(username);
             em.remove(foundUser);
@@ -50,8 +50,8 @@ public class UserDAO {
         }
     }
 
-    public Users updateUserByUserName(String userName, Users newUser){
-        try(var em = emf.createEntityManager()){
+    public Users updateUserByUserName(String userName, Users newUser) {
+        try (var em = emf.createEntityManager()) {
             em.getTransaction().begin();
             Users foundUser = findUserByName(userName);
             Users updatedUser = em.merge(foundUser);
@@ -67,9 +67,8 @@ public class UserDAO {
         }
         return instance;
     }
-  
-  //[US-1] As a user I want to get all the information about a person
-    // TODO: Change this method to be similar to {@link #retrieveAllUserInfo(Users)}
+
+    //[US-1] As a user I want to get all the information about a person
     public List<UsersNameAddressHobbiesNumbersDTO> retrieveAllUserInfo(Users users) {
         try (var em = emf.createEntityManager()) {
             TypedQuery<UsersNameAddressHobbiesNumbersDTO> q = em.createQuery("SELECT new dao.UsersNameAddressHobbiesNumbersDTO(u.name," +
@@ -84,11 +83,12 @@ public class UserDAO {
     }
 
     //[US-4] As a user I want to get the number of people with a given hobby
-    public int numberOfPeopleWithHobby(Hobby hobby) {
+    public Long numberOfPeopleWithHobby(String hobby) {
         try (var em = emf.createEntityManager()) {
-            TypedQuery<UserHobbyLink> query = em.createQuery("SELECT COUNT(hobby) FROM UserHobbyLink l WHERE l.hobby.id = :hobby", UserHobbyLink.class);
-            query.setParameter("hobby", hobby);
-            return query.getResultList().size();
+            Long count = em.createQuery("SELECT COUNT(*) FROM UserHobbyLink l WHERE l.hobby.name = :hobby", Long.class)
+                    .setParameter("hobby", hobby)
+                    .getSingleResult();
+            return count;
         }
     }
 
