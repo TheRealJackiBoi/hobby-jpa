@@ -1,8 +1,8 @@
-package config;
+package test;
 
 import jakarta.persistence.EntityManagerFactory;
 import lombok.NoArgsConstructor;
-import model.*;
+import model.Users;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -62,7 +62,7 @@ public class HibernateConfig {
         configuration.addAnnotatedClass(model.City.class);
         configuration.addAnnotatedClass(model.Hobby.class);
         configuration.addAnnotatedClass(model.Phonenumber.class);
-        configuration.addAnnotatedClass(model.Users.class);
+        configuration.addAnnotatedClass(Users.class);
         configuration.addAnnotatedClass(model.UserHobbyLink.class);
     }
 

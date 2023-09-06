@@ -29,7 +29,7 @@ public class UserHobbyLink {
         private Hobby hobby;
 
         @ManyToOne
-        private User user;
+        private Users users;
 
     public UserHobbyLink(Experience experience) {
         this.experience = experience;
@@ -43,4 +43,9 @@ public class UserHobbyLink {
             PROFESSIONAL
         }
 
+    public UserHobbyLink(Experience experience, Hobby hobby, Users users) {
+        this.experience = experience;
+        this.hobby = hobby;
+        this.users = users;
+    }
 }

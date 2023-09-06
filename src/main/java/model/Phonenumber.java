@@ -9,6 +9,9 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @Table(name = "phonenumber")
+@NamedQueries({
+        @NamedQuery(name = "PhoneNumber.getAllUsersPhoneNumbers", query = "SELECT p FROM Phonenumber p WHERE Users = ?1")
+})
 @Entity
 public class Phonenumber {
 
@@ -20,7 +23,7 @@ public class Phonenumber {
     private PhoneType type;
 
     @ManyToMany(mappedBy = "phonenumbers")
-    private Set<User> users;
+    private Set<Users> users;
 
 
     public Phonenumber(String number, PhoneType type) {
