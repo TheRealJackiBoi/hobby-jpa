@@ -32,9 +32,12 @@ public class User {
     @ManyToMany
     private Set<Phonenumber> phonenumbers;
 
-    public User(String name, String password, Address address) {
+    public User(String name, String password) {
         this.name = name;
         this.password = password;
+    }
+
+    public void setAddress(Address address) {
         this.address = address;
     }
 }
