@@ -10,7 +10,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Table(name = "phonenumber")
 @NamedQueries({
-        @NamedQuery(name = "PhoneNumber.getAllUsersPhoneNumbers", query = "SELECT p FROM Phonenumber p WHERE Users = ?1")
+        @NamedQuery(name = "PhoneNumber.getAllUsersPhoneNumbers", query = "SELECT p FROM Phonenumber p JOIN users_phonenumber up ON up.users_id = ?1")
 })
 @Entity
 public class Phonenumber {

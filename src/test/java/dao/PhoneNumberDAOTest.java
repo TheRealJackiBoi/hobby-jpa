@@ -69,8 +69,8 @@ class PhoneNumberDAOTest {
         userDAO.persistUser(testUser1);
         testUser1.addPhonenumber(testNumber, Phonenumber.PhoneType.MOBILE);
 
-        Phonenumber foundNumber = phonenumberDAO.findPhoneNumberByName("testUser1");
-        Assert.assertEquals("12345678", foundNumber);
+        Phonenumber foundNumber = phoneNumberDAO.findPhoneNumberByName("testUser1");
+        assertEquals("12345678", foundNumber.getNumber());
 
     }
     @Test
