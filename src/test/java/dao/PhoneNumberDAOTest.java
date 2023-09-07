@@ -1,13 +1,11 @@
 package dao;
 
-import config.HibernateConfig;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Query;
 import model.*;
 import org.junit.Assert;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.List;
 
@@ -16,16 +14,21 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PhoneNumberDAOTest {
     private static EntityManagerFactory emf;
+    private static EntityManager em;
     private static PhoneNumberDAO phonenumberDAO;
     private static UserDAO userDAO;
     private static UsersPhoneNumberLinkDAO usersPhoneNumberLinkDAO;
 
     @BeforeAll
-    static void setup(){
+    static void settingUpFirst(){
         emf = HibernateConfigTest.getEntityManagerFactoryConfig("hobby_test");
+        em = emf.createEntityManager();
         phonenumberDAO = PhoneNumberDAO.getInstance(emf);
         userDAO = UserDAO.getInstance(emf);
         usersPhoneNumberLinkDAO = UsersPhoneNumberLinkDAO.getInstance(emf);
+    }
+    @BeforeEach
+    void setup(){
 
         Users testUser1 = new Users("testUser1", "testPassword1", null);
         Users testUser2 = new Users("testUser2", "testPassword1", null);
@@ -52,9 +55,25 @@ class PhoneNumberDAOTest {
         usersPhoneNumberLinkDAO.persistUsersPhoneNumberLink(usersPhoneNumberLink2);
         usersPhoneNumberLinkDAO.persistUsersPhoneNumberLink(usersPhoneNumberLink3);
         usersPhoneNumberLinkDAO.persistUsersPhoneNumberLink(usersPhoneNumberLink4);
-
-
     }
+
+    @AfterEach
+    void cleanUp(){
+        em.getTransaction().begin();
+        String sqlUserPhone = "TRUNCATE TABLE users_phonenumber RESTART IDENTITY CASCADE";
+        Query userPhone = em.createNativeQuery(sqlUserPhone);
+        userPhone.executeUpdate();
+
+        String sqlUsers = "TRUNCATE TABLE users RESTART IDENTITY CASCADE";
+        Query users = em.createNativeQuery(sqlUsers);
+        users.executeUpdate();
+
+        String sqlPhoneNumber = "TRUNCATE TABLE phonenumber RESTART IDENTITY CASCADE";
+        Query phoneNumber = em.createNativeQuery(sqlPhoneNumber);
+        phoneNumber.executeUpdate();
+        em.getTransaction().commit();
+    }
+
     @AfterAll
     static void closeDown(){
         emf.close();
@@ -63,7 +82,7 @@ class PhoneNumberDAOTest {
 
     @Test
     void getAllNumbersBelongingToAPerson() {
-        Users userTest = userDAO.findUserByName(1);
+        Users userTest = userDAO.findUserById(1);
 
         List<Phonenumber> phonenumbers = phonenumberDAO.getAllNumbersBelongingToAPersonById(userTest.getId());
         assertEquals(2, phonenumbers.size());
