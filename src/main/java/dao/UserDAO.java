@@ -98,20 +98,6 @@ public class UserDAO {
     }
 
     //[US-8] As a user I want to get all the information about a person given a phonenumber - address, hobbies, etc.
-    /*
-    public List<UsersNameAddressHobbiesNumbersDTO> retrieveAllUserInfoByPhoneNumber(String phoneNumber) {
-        try (var em = emf.createEntityManager()) {
-            TypedQuery<UsersNameAddressHobbiesNumbersDTO> q = em.createQuery("SELECT new dao.UsersNameAddressHobbiesNumbersDTO(u.name," +
-                    " u.address," +
-                    " u.userHobbyLinks," +
-                    " u.phonenumbers) " +
-                    "FROM Users u " +
-                    "JOIN Phonenumber p ON u.id = u.id WHERE p.number = :phoneNumber", UsersNameAddressHobbiesNumbersDTO.class);
-            q.setParameter("phoneNumber", phoneNumber);
-            return q.getResultList();
-        }
-    }
-     */
     public Users retrieveAllUserInfoByPhoneNumber(String phoneNumber) {
         try (var em = emf.createEntityManager()) {
             TypedQuery<Users> q = em.createQuery("SELECT u FROM Users u JOIN Phonenumber p ON u.id = u.id WHERE p.number = :phoneNumber", Users.class);

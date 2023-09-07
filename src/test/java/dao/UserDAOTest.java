@@ -6,7 +6,6 @@ import jakarta.persistence.EntityManagerFactory;
 import model.*;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
