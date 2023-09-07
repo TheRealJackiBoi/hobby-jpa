@@ -1,5 +1,5 @@
 
-# Hinder
+# Hobbi
 
 Our plan is to make the next matching app but for hobbies. You will get an overview of people that has the same Hobby/ies as you, and you can therefore find more people you can enjoy it with.
 
@@ -8,6 +8,11 @@ Our plan is to make the next matching app but for hobbies. You will get an overv
 
 ## EER-Diagram
 ![EER-Diagram](https://cdn.discordapp.com/attachments/1037341246152257666/1148935692320251924/image.png)
+
+## Collaboration
+Our group have used GitHub and GitHub Projects to collaborate. We have created all of the user stories in the project kan-ban board, and then distributed the different tasks between us. Then we have been able to see if a task if someone was working on a specific task, or if it was done, or not started yet. This made it easy to find out what had to be done and get the full overview of the project.__
+
+To make the collaboration easier, we implemented a rule on our main branch, such that it wasn't possible to pull into it, without having a pull request accepted by another member of the group.
 
 ## Technical requirements
 - JPA
@@ -19,10 +24,3 @@ Our plan is to make the next matching app but for hobbies. You will get an overv
 - PostgresSQL
 - pgAdmin
 - Lombok
-
-
-    - check [R-3] A description of your business idea
-    - check [R-3] An Domain Model of your business idea
-    - check [R-3] An EE-diagram of your database
-    - [R-3] A group description of your group work and how you have collaborated (GIT, Trello, Discord, who did what, etc.)
-    - check [R-3] All technical requirements listed above under Project Requirements
