@@ -12,7 +12,7 @@ import java.util.Set;
 @Table(name = "phonenumber")
 @ToString
 @NamedQueries({
-        @NamedQuery(name = "PhoneNumber.getAllUsersPhoneNumbers", query = "SELECT p FROM Phonenumber p WHERE Users = ?1")
+        @NamedQuery(name = "PhoneNumber.getAllUsersPhoneNumbers", query = "SELECT p FROM Phonenumber p JOIN users_phonenumber up ON up.users_id = ?1")
 })
 @Entity
 public class Phonenumber {
@@ -62,5 +62,14 @@ public class Phonenumber {
         HOME,
         WORK,
         MOBILE
+    }
+
+    @Override
+    public String toString() {
+        return "Phonenumber{" +
+                "number='" + number + '\'' +
+                ", type=" + type +
+                ", users=" + users +
+                '}';
     }
 }

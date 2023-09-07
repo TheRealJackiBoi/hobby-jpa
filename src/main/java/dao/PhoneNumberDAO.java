@@ -32,10 +32,18 @@ public class PhoneNumberDAO {
         }
     }
 
-    public Phonenumber findPhoneNumberByName(String number){
+    public Phonenumber findPhoneNumberByNumber(String number){
         try(var em = emf.createEntityManager()){
             em.getTransaction().begin();
             Phonenumber foundPhoneNumber = em.find(Phonenumber.class, number);
+            em.getTransaction().commit();
+            return foundPhoneNumber;
+        }
+    }
+    public Phonenumber findPhoneNumberByName(String name){
+        try(var em = emf.createEntityManager()){
+            em.getTransaction().begin();
+            Phonenumber foundPhoneNumber = em.find(Phonenumber.class, name);
             em.getTransaction().commit();
             return foundPhoneNumber;
         }
@@ -44,7 +52,7 @@ public class PhoneNumberDAO {
     public void deletePhoneNumberByNumber(String number){
         try(var em = emf.createEntityManager()){
             em.getTransaction().begin();
-            Phonenumber foundPhoneNumber = findPhoneNumberByName(number);
+            Phonenumber foundPhoneNumber = findPhoneNumberByNumber(number);
             em.remove(foundPhoneNumber);
             em.getTransaction().commit();
         }
@@ -53,7 +61,7 @@ public class PhoneNumberDAO {
     public Phonenumber updatePhoneNumberByNumber(String number, Phonenumber newPhoneNumber){
         try(var em = emf.createEntityManager()){
             em.getTransaction().begin();
-            Phonenumber foundNumber = findPhoneNumberByName(number);
+            Phonenumber foundNumber = findPhoneNumberByNumber(number);
             Phonenumber updatedPhoneNumber = em.merge(newPhoneNumber);
             em.getTransaction().commit();
             return updatedPhoneNumber;
@@ -73,4 +81,5 @@ public class PhoneNumberDAO {
             return phonenumbers;
         }
     }
+
 }
