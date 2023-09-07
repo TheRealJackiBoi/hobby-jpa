@@ -29,7 +29,7 @@ public class UserDAO {
         }
     }
 
-    public Users findUserByName(int id) {
+    public Users findUserById(int id) {
         try (var em = emf.createEntityManager()) {
             em.getTransaction().begin();
             Users foundUser = em.find(Users.class, id);
@@ -41,7 +41,7 @@ public class UserDAO {
     public void deleteUserByName(int id) {
         try (var em = emf.createEntityManager()) {
             em.getTransaction().begin();
-            Users foundUser = findUserByName(id);
+            Users foundUser = findUserById(id);
             em.remove(foundUser);
             em.getTransaction().commit();
         }
@@ -50,7 +50,7 @@ public class UserDAO {
     public Users updateUserById(int id, Users newUser) {
         try (var em = emf.createEntityManager()) {
             em.getTransaction().begin();
-            Users foundUser = findUserByName(id);
+            Users foundUser = findUserById(id);
             Users updatedUser = em.merge(foundUser);
             em.getTransaction().commit();
             return updatedUser;

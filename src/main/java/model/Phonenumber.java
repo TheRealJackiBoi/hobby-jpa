@@ -12,7 +12,7 @@ import java.util.Set;
 @Table(name = "phonenumber")
 @ToString
 @NamedQueries({
-        @NamedQuery(name = "PhoneNumber.getAllUsersPhoneNumbers", query = "SELECT p FROM Phonenumber p JOIN UsersPhoneNumberLink up ON up.users.id = ?1")
+        @NamedQuery(name = "PhoneNumber.getAllUsersPhoneNumbers", query = "SELECT p FROM Phonenumber p JOIN UsersPhoneNumberLink up ON p.id = up.phonenumber.id WHERE up.users.id = ?1")
 })
 @Entity
 public class Phonenumber {

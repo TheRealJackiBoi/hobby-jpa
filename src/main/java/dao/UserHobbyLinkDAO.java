@@ -63,7 +63,7 @@ public class UserHobbyLinkDAO {
     public int countNumberOfParticipantsInHobby(String hobbyName){
         try(var em = emf.createEntityManager()){
             em.getTransaction().begin();
-            Query query = em.createQuery("SELECT count(b.user) FROM UserHobbyLink b WHERE UserHobbyLink.hobby = ?1");
+            Query query = em.createQuery("SELECT count(b.users) FROM UserHobbyLink b WHERE UserHobbyLink.hobby = ?1");
             query.setParameter(1, hobbyName);
             em.getTransaction().commit();
             return query.getFirstResult();
