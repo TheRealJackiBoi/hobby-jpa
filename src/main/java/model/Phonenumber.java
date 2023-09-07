@@ -3,12 +3,14 @@ package model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.Set;
 
 @Getter
 @NoArgsConstructor
 @Table(name = "phonenumber")
+@ToString
 @NamedQueries({
         @NamedQuery(name = "PhoneNumber.getAllUsersPhoneNumbers", query = "SELECT p FROM Phonenumber p WHERE Users = ?1")
 })
@@ -22,7 +24,8 @@ public class Phonenumber {
     @Column(name = "type")
     private PhoneType type;
 
-    @ManyToMany(mappedBy = "phonenumbers")
+    @ToString.Exclude
+    @ManyToMany(mappedBy = "phonenumbers", fetch = FetchType.EAGER)
     private Set<Users> users;
 
     @PrePersist

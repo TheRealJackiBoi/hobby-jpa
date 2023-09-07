@@ -3,10 +3,12 @@ package model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Getter
 @NoArgsConstructor
 @Table(name = "address")
+@ToString
 @Entity
 public class Address {
 
