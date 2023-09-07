@@ -25,7 +25,6 @@ public class Phonenumber {
     @ManyToMany(mappedBy = "phonenumbers")
     private Set<Users> users;
 
-
     @PrePersist
     public void prePersist() {
         if (type == null) {

@@ -69,16 +69,16 @@ public class UserDAO {
     }
 
     //[US-1] As a user I want to get all the information about a person
-    public List<UsersNameAddressHobbiesNumbersDTO> retrieveAllUserInfo(Users users) {
+    public UsersNameAddressHobbiesNumbersDTO retrieveAllUserInfo(Users users) {
         try (var em = emf.createEntityManager()) {
-            TypedQuery<UsersNameAddressHobbiesNumbersDTO> q = em.createQuery("SELECT new dao.UsersNameAddressHobbiesNumbersDTO(u.name," +
+            TypedQuery<UsersNameAddressHobbiesNumbersDTO> q = em.createQuery("SELECT new dao.UsersNameAddressHobbiesNumbersDTO (u.name," +
                     " u.address," +
                     " u.userHobbyLinks," +
                     " u.phonenumbers) " +
                     "FROM Users u " +
                     "WHERE u.id = :id", UsersNameAddressHobbiesNumbersDTO.class);
             q.setParameter("id", users.getId());
-            return q.getResultList();
+            return q.getSingleResult();
         }
     }
 
@@ -109,7 +109,7 @@ public class UserDAO {
                     " u.userHobbyLinks," +
                     " u.phonenumbers) " +
                     "FROM Users u " +
-                    "JOIN Phonenumber p where p.number = :phoneNumber", UsersNameAddressHobbiesNumbersDTO.class);
+                    "JOIN users p WHERE  p.number = :phoneNumber", UsersNameAddressHobbiesNumbersDTO.class);
             q.setParameter("phoneNumber", phoneNumber);
             return q.getResultList();
         }

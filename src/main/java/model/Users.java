@@ -30,6 +30,9 @@ public class Users {
     private Set<UserHobbyLink> userHobbyLinks = new HashSet<>();
 
     @ManyToMany
+    @JoinTable(name = "users_phonenumber",
+            joinColumns = @JoinColumn(name = "users_id"),
+            inverseJoinColumns = @JoinColumn(name = "phonenumber_id"))
     private Set<Phonenumber> phonenumbers = new HashSet<>();
 
     public Users(String name, String password, Address address) {
@@ -40,5 +43,9 @@ public class Users {
 
     public void addPhonenumber(Phonenumber phone) {
         phonenumbers.add(phone);
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

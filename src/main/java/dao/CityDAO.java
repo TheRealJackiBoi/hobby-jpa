@@ -17,9 +17,9 @@ public class CityDAO {
     private CityDAO() {
     }
 
-    public static CityDAO getInstance() {
-        if (instance == null) {
-            emf = HibernateConfig.getEntityManagerFactoryConfig("hobby");
+    public static CityDAO getInstance(EntityManagerFactory _emf){
+        if(instance == null) {
+            emf = _emf;
             instance = new CityDAO();
         }
         return instance;
