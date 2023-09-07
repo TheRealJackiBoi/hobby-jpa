@@ -48,7 +48,7 @@ public class UserDAOTest {
         hobbyDAO.persistHobby(testHobby);
         userHobbyLinkDAO.persistUserHobbyLink(uhl);
 
-        testUsers.addPhonenumber(testPhonenumber);
+        testUsers.addPhonenumber(testPhonenumber, Phonenumber.PhoneType.MOBILE);
 
 
         // Test method with test entities

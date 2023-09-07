@@ -36,4 +36,13 @@ public class Phonenumber {
         WORK,
         MOBILE
     }
+
+    @Override
+    public String toString() {
+        return "Phonenumber{" +
+                "number='" + number + '\'' +
+                ", type=" + type +
+                ", users=" + users +
+                '}';
+    }
 }

@@ -38,7 +38,7 @@ public class Users {
         this.address = address;
     }
 
-    public void addPhonenumber(Phonenumber phone) {
+    public void addPhonenumber(Phonenumber phone, Phonenumber.PhoneType type) {
         phonenumbers.add(phone);
     }
 }

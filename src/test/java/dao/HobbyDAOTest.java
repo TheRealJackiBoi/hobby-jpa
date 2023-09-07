@@ -1,5 +1,6 @@
 package dao;
 
+import model.Hobby;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,4 +23,10 @@ class HobbyDAOTest {
     @Test
     void getHobbiesWithNumberOfParticipants() {
     }
+    @Test
+    void findAllUsersWithGivenHoby(Hobby hobby){
+
+
+    }
+
 }
