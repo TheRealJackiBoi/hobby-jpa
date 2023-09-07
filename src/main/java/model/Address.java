@@ -1,5 +1,6 @@
 package model;
 
+import dao.HobbyDAO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,10 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @Table(name = "address")
+@NamedQueries({
+        @NamedQuery(name = "Address.getAllAddresses", query = "SELECT a FROM Address a"),
+        @NamedQuery(name = "Address.checkIfAddressExists", query = "SELECT a FROM Address a WHERE a.streetname = ?1 AND a.houseNumber = ?2 AND a.floor = ?3")
+})
 @Entity
 public class Address {
 
@@ -32,5 +37,10 @@ public class Address {
         this.houseNumber = houseNumber;
         this.floor = floor;
         this.city = city;
+    }
+
+    @PrePersist
+    void onPrePersist(){
+        
     }
 }
