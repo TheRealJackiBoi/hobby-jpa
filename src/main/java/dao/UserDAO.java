@@ -5,6 +5,7 @@ import config.HibernateConfig;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import model.Hobby;
+import model.Phonenumber;
 import model.UserHobbyLink;
 import model.Users;
 
@@ -69,16 +70,11 @@ public class UserDAO {
     }
 
     //[US-1] As a user I want to get all the information about a person
-    public List<UsersNameAddressHobbiesNumbersDTO> retrieveAllUserInfo(Users users) {
+    public Users retrieveAllUserInfo(Users users) {
         try (var em = emf.createEntityManager()) {
-            TypedQuery<UsersNameAddressHobbiesNumbersDTO> q = em.createQuery("SELECT new dao.UsersNameAddressHobbiesNumbersDTO(u.name," +
-                    " u.address," +
-                    " u.userHobbyLinks," +
-                    " u.phonenumbers) " +
-                    "FROM Users u " +
-                    "WHERE u.id = :id", UsersNameAddressHobbiesNumbersDTO.class);
+            TypedQuery<Users> q = em.createQuery("SELECT u FROM Users u WHERE u.id = :id", Users.class);
             q.setParameter("id", users.getId());
-            return q.getResultList();
+            return q.getSingleResult();
         }
     }
 
@@ -102,16 +98,11 @@ public class UserDAO {
     }
 
     //[US-8] As a user I want to get all the information about a person given a phonenumber - address, hobbies, etc.
-    public List<UsersNameAddressHobbiesNumbersDTO> retrieveAllUserInfoByPhoneNumber(String phoneNumber) {
+    public Users retrieveAllUserInfoByPhoneNumber(String phoneNumber) {
         try (var em = emf.createEntityManager()) {
-            TypedQuery<UsersNameAddressHobbiesNumbersDTO> q = em.createQuery("SELECT new dao.UsersNameAddressHobbiesNumbersDTO(u.name," +
-                    " u.address," +
-                    " u.userHobbyLinks," +
-                    " u.phonenumbers) " +
-                    "FROM Users u " +
-                    "JOIN Phonenumber p where p.number = :phoneNumber", UsersNameAddressHobbiesNumbersDTO.class);
+            TypedQuery<Users> q = em.createQuery("SELECT u FROM Users u JOIN Phonenumber p ON u.id = u.id WHERE p.number = :phoneNumber", Users.class);
             q.setParameter("phoneNumber", phoneNumber);
-            return q.getResultList();
+            return q.getSingleResult();
         }
     }
 

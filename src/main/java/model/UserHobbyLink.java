@@ -3,6 +3,7 @@ package model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDate;
 
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor
 @Table(name = "user_hobby_link")
+@ToString
 @Entity
 public class UserHobbyLink {
 
@@ -29,6 +31,7 @@ public class UserHobbyLink {
         @ManyToOne
         private Hobby hobby;
 
+        @ToString.Exclude
         @ManyToOne
         private Users users;
 

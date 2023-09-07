@@ -3,12 +3,14 @@ package model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.Set;
 
 @Getter
 @NoArgsConstructor
 @Table(name = "city")
+@ToString
 @Entity
 public class City {
 
@@ -25,7 +27,8 @@ public class City {
     @Column(name = "municipality")
     private String municipality;
 
-    @OneToMany(mappedBy = "city")
+    @ToString.Exclude
+    @OneToMany(mappedBy = "city", fetch = FetchType.EAGER)
     private Set<Address> addresses;
 
     public City(int zip, String name, String region, String municipality) {

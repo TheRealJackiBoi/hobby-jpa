@@ -3,12 +3,14 @@ package model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.Set;
 
 @Getter
 @NoArgsConstructor
 @Table(name = "hobby")
+@ToString
 @NamedQueries({
         @NamedQuery(name = "Hobby.getAllHobbies", query = "SELECT h FROM Hobby h")
 })
@@ -29,7 +31,8 @@ public class Hobby {
     @Column(name = "category")
     private String category;
 
-    @OneToMany(mappedBy = "hobby")
+    @ToString.Exclude
+    @OneToMany(mappedBy = "hobby", fetch = FetchType.EAGER)
     private Set<UserHobbyLink> userHobbyLinks;
 
     public Hobby(String name, HobbyType type, String wikiLink, String category) {

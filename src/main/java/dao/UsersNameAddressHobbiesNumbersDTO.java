@@ -1,6 +1,7 @@
 package dao;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import model.Address;
 import model.Phonenumber;
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @ToString
 @Getter
+@NoArgsConstructor
 public class UsersNameAddressHobbiesNumbersDTO {
     private String name;
     private Address address;
@@ -22,4 +24,6 @@ public class UsersNameAddressHobbiesNumbersDTO {
         this.hobbies = hobbies;
         this.phonenumbers = phonenumbers;
     }
+
+
 }

@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 import java.time.LocalDate;
 
 import static model.UserHobbyLink.Experience.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UserDAOTest {
     private static EntityManagerFactory emf;
@@ -30,43 +31,44 @@ public class UserDAOTest {
 
     @Test
     void retrieveAllUserInfo() {
-        // Create test entities
-        Address testAddress = new Address("TestStreet", "TestHouseNumber", "TestFloor", null);
+        City testCity = new City(2840, "Holte", "Sjælland", "Rudersdal Kommune");
+        Address testAddress = new Address("TestStreet", "TestHouseNumber", "TestFloor", testCity);
         Users testUsers = new Users("TestUsername", "TestPassword", testAddress);
         Hobby testHobby = new Hobby("TestHobby", Hobby.HobbyType.INDOOR, "", "Generel");
         UserHobbyLink uhl = new UserHobbyLink(LocalDate.now(), testHobby, BEGINNER, testUsers);
-        Phonenumber testPhonenumber = new Phonenumber("1134455", Phonenumber.PhoneType.MOBILE);
+        Phonenumber testPhonenumber = new Phonenumber("+4511223344", Phonenumber.PhoneType.MOBILE);
 
         UserDAO userDAO = UserDAO.getInstance(EMF.getInstance("hobby_test"));
         AddressDAO addressDAO = AddressDAO.getInstance(EMF.getInstance("hobby_test"));
         HobbyDAO hobbyDAO = HobbyDAO.getInstance(EMF.getInstance("hobby_test"));
         UserHobbyLinkDAO userHobbyLinkDAO = UserHobbyLinkDAO.getInstance(EMF.getInstance("hobby_test"));
+        CityDAO cityDAO = CityDAO.getInstance(EMF.getInstance("hobby_test"));
+        PhoneNumberDAO phoneNumberDAO = PhoneNumberDAO.getInstance(EMF.getInstance("hobby_test"));
 
         // Persist test entities
+        testUsers.addPhonenumber(testPhonenumber, Phonenumber.PhoneType.WORK);
+
+        phoneNumberDAO.persistPhoneNumber(testPhonenumber);
+        cityDAO.persistCity(testCity);
         addressDAO.persistAddress(testAddress);
         userDAO.persistUser(testUsers);
         hobbyDAO.persistHobby(testHobby);
         userHobbyLinkDAO.persistUserHobbyLink(uhl);
 
-        testUsers.addPhonenumber(testPhonenumber);
+        testUsers.addPhonenumber(testPhonenumber, Phonenumber.PhoneType.MOBILE);
 
 
         // Test method with test entities
+        Users result = userDAO.retrieveAllUserInfo(testUsers);
         System.out.println(userDAO.retrieveAllUserInfo(testUsers));
 
         // Assert that the result is the same as the test entities, confirming that all the information is retrieved properly
-        /*
-        System.out.println(result.getName());
-        System.out.println(testUsers.getName());
         Assert.assertEquals(result.getName(), "TestUsername");
 
         Assert.assertEquals(result.getId(), testUsers.getId());
 
-        System.out.println(result.getAddress().getStreetname());
-        System.out.println(testAddress.getStreetname());
         Assert.assertEquals(result.getAddress().getStreetname(), testAddress.getStreetname());
 
-         */
     }
 
     @Test
@@ -108,6 +110,72 @@ public class UserDAOTest {
 
         Assert.assertEquals(result2, 1);
         Assert.assertNotEquals(result2, 2);
+
+    }
+
+    @Test
+    void getAllUsersFromSameZip() {
+        //
+        City holte = new City(2840, "Holte", "Sjælland", "Rudersdal Kommune");
+        City lyngby = new City(2800, "Lyngby", "Sjælland", "Lyngby-Taarbæk Kommune");
+
+        Address address1 = new Address("Rudeskovparken", "3", "2, 211", holte);
+        Address address2 = new Address("Lyngby Hovedgade", "1", "", lyngby);
+        Address address3 = new Address("Lyngby Hovedgade", "2", "", lyngby);
+
+        Users user1 = new Users("TestUsername1", "TestPassword1", address1);
+        Users user2 = new Users("TestUsername2", "TestPassword2", address2);
+        Users user3 = new Users("TestUsername3", "TestPassword3", address3);
+
+        UserDAO userDAO = UserDAO.getInstance(EMF.getInstance("hobby_test"));
+        AddressDAO addressDAO = AddressDAO.getInstance(EMF.getInstance("hobby_test"));
+        CityDAO cityDAO = CityDAO.getInstance(EMF.getInstance("hobby_test"));
+
+        cityDAO.persistCity(holte);
+        cityDAO.persistCity(lyngby);
+
+        addressDAO.persistAddress(address1);
+        addressDAO.persistAddress(address2);
+        addressDAO.persistAddress(address3);
+
+        userDAO.persistUser(user1);
+        userDAO.persistUser(user2);
+        userDAO.persistUser(user3);
+
+        userDAO.getAllUsersFromSameZip("2800");
+        assertEquals(userDAO.getAllUsersFromSameZip("2800").size(), 2);
+    }
+
+    @Test
+    void retrieveAllUserInfoByPhoneNumber() {
+        // Create test entities
+        City testCity = new City(2840, "Holte", "Sjælland", "Rudersdal Kommune");
+        Address testAddress = new Address("TestStreet", "TestHouseNumber", "TestFloor", testCity);
+        Users testUsers = new Users("TestUsername", "TestPassword", testAddress);
+        Hobby testHobby = new Hobby("TestHobby", Hobby.HobbyType.INDOOR, "", "Generel");
+        UserHobbyLink uhl = new UserHobbyLink(LocalDate.now(), testHobby, BEGINNER, testUsers);
+        Phonenumber testPhonenumber = new Phonenumber("+4511223344", Phonenumber.PhoneType.MOBILE);
+
+        UserDAO userDAO = UserDAO.getInstance(EMF.getInstance("hobby_test"));
+        AddressDAO addressDAO = AddressDAO.getInstance(EMF.getInstance("hobby_test"));
+        HobbyDAO hobbyDAO = HobbyDAO.getInstance(EMF.getInstance("hobby_test"));
+        UserHobbyLinkDAO userHobbyLinkDAO = UserHobbyLinkDAO.getInstance(EMF.getInstance("hobby_test"));
+        CityDAO cityDAO = CityDAO.getInstance(EMF.getInstance("hobby_test"));
+        PhoneNumberDAO phoneNumberDAO = PhoneNumberDAO.getInstance(EMF.getInstance("hobby_test"));
+
+        // Persist test entities
+        testUsers.addPhonenumber(testPhonenumber, Phonenumber.PhoneType.WORK);
+
+        phoneNumberDAO.persistPhoneNumber(testPhonenumber);
+        cityDAO.persistCity(testCity);
+        addressDAO.persistAddress(testAddress);
+        userDAO.persistUser(testUsers);
+        hobbyDAO.persistHobby(testHobby);
+        userHobbyLinkDAO.persistUserHobbyLink(uhl);
+
+        // Test method with test entities
+        System.out.println(userDAO.retrieveAllUserInfoByPhoneNumber("+4511223344").toString());
+        Assert.assertTrue(testUsers.getPhonenumbers().contains(testPhonenumber));
 
     }
 }
