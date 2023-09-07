@@ -12,7 +12,7 @@ import java.util.Set;
 @Table(name = "phonenumber")
 @ToString
 @NamedQueries({
-        @NamedQuery(name = "PhoneNumber.getAllUsersPhoneNumbers", query = "SELECT p FROM Phonenumber p JOIN users_phonenumber up ON up.users_id = ?1")
+        @NamedQuery(name = "PhoneNumber.getAllUsersPhoneNumbers", query = "SELECT p FROM Phonenumber p JOIN UsersPhoneNumberLink up ON up.users.id = ?1")
 })
 @Entity
 public class Phonenumber {
@@ -24,9 +24,8 @@ public class Phonenumber {
     @Column(name = "type")
     private PhoneType type;
 
-    @ToString.Exclude
-    @ManyToMany(mappedBy = "phonenumbers", fetch = FetchType.EAGER)
-    private Set<Users> users;
+    @OneToMany(mappedBy = "phonenumber", fetch = FetchType.EAGER)
+    private Set<UsersPhoneNumberLink> usersPhoneNumberLinks;
 
     @PrePersist
     public void prePersist() {
@@ -58,6 +57,17 @@ public class Phonenumber {
         this.type = type;
     }
 
+
+    public void addUsersPhoneNumberLink(UsersPhoneNumberLink usersPhoneNumberLink) {
+        usersPhoneNumberLinks.add(usersPhoneNumberLink);
+    }
+
+    public void removeUsersPhoneNumberLink(UsersPhoneNumberLink usersPhoneNumberLink) {
+        usersPhoneNumberLinks.remove(usersPhoneNumberLink);
+    }
+
+
+
     public enum PhoneType {
         HOME,
         WORK,
@@ -69,7 +79,7 @@ public class Phonenumber {
         return "Phonenumber{" +
                 "number='" + number + '\'' +
                 ", type=" + type +
-                ", users=" + users +
+                ", users=" + usersPhoneNumberLinks.toString() +
                 '}';
     }
 }

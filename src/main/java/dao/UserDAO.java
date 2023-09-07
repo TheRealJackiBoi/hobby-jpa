@@ -2,11 +2,7 @@ package dao;
 
 import jakarta.persistence.TypedQuery;
 import config.HibernateConfig;
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import model.Hobby;
-import model.Phonenumber;
-import model.UserHobbyLink;
 import model.Users;
 
 import java.util.List;
@@ -33,28 +29,28 @@ public class UserDAO {
         }
     }
 
-    public Users findUserByName(String name) {
+    public Users findUserByName(int id) {
         try (var em = emf.createEntityManager()) {
             em.getTransaction().begin();
-            Users foundUser = em.find(Users.class, name);
+            Users foundUser = em.find(Users.class, id);
             em.getTransaction().commit();
             return foundUser;
         }
     }
 
-    public void deleteUserByName(String username) {
+    public void deleteUserByName(int id) {
         try (var em = emf.createEntityManager()) {
             em.getTransaction().begin();
-            Users foundUser = findUserByName(username);
+            Users foundUser = findUserByName(id);
             em.remove(foundUser);
             em.getTransaction().commit();
         }
     }
 
-    public Users updateUserByUserName(String userName, Users newUser) {
+    public Users updateUserById(int id, Users newUser) {
         try (var em = emf.createEntityManager()) {
             em.getTransaction().begin();
-            Users foundUser = findUserByName(userName);
+            Users foundUser = findUserByName(id);
             Users updatedUser = em.merge(foundUser);
             em.getTransaction().commit();
             return updatedUser;

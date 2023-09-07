@@ -1,10 +1,10 @@
 package dao;
 
-import config.HibernateConfig;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.TypedQuery;
 import model.Phonenumber;
 import model.Users;
+import model.UsersPhoneNumberLink;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,10 +40,11 @@ public class PhoneNumberDAO {
             return foundPhoneNumber;
         }
     }
-    public Phonenumber findPhoneNumberByName(String name){
+    public List<Phonenumber> findPhoneNumberByName(String name){
         try(var em = emf.createEntityManager()){
             em.getTransaction().begin();
-            Phonenumber foundPhoneNumber = em.find(Phonenumber.class, name);
+            TypedQuery<Phonenumber> tq = em.createQuery("SELECT p FROM Phonenumber p JOIN UsersPhoneNumberLink up ON up.phonenumber.number = p.number JOIN Users u ON u.id = up.users.id WHERE u.name = :name", Phonenumber.class);
+            List<Phonenumber> foundPhoneNumber = tq.setParameter("name", name).getResultList();
             em.getTransaction().commit();
             return foundPhoneNumber;
         }
@@ -53,6 +54,14 @@ public class PhoneNumberDAO {
         try(var em = emf.createEntityManager()){
             em.getTransaction().begin();
             Phonenumber foundPhoneNumber = findPhoneNumberByNumber(number);
+            for (UsersPhoneNumberLink usersPhoneNumberLink:
+                 foundPhoneNumber.getUsersPhoneNumberLinks()) {
+                usersPhoneNumberLink.removePhoneNumber();
+                em.merge(usersPhoneNumberLink);
+            }
+            em.getTransaction().commit();
+            em.getTransaction().begin();
+            foundPhoneNumber = em.find(Phonenumber.class, number);
             em.remove(foundPhoneNumber);
             em.getTransaction().commit();
         }
@@ -70,13 +79,12 @@ public class PhoneNumberDAO {
 
     //US-2 - As a user i want to get all the phone numbers from a given person
     //TODO: test
-    public List<Phonenumber> getAllNumbersBelongingToAPerson(int id){
+    public List<Phonenumber> getAllNumbersBelongingToAPersonById(int id){
         List<Phonenumber> phonenumbers = new ArrayList<>();
         try(var em = emf.createEntityManager()) {
             em.getTransaction().begin();
-            Users users = em.find(Users.class, id);
             TypedQuery<Phonenumber> typedQuery = em.createNamedQuery("PhoneNumber.getAllUsersPhoneNumbers", Phonenumber.class);
-            phonenumbers = typedQuery.setParameter(1, users).getResultList();
+            phonenumbers = typedQuery.setParameter(1, id).getResultList();
             em.getTransaction().commit();
             return phonenumbers;
         }

@@ -32,11 +32,8 @@ public class Users {
     @OneToMany(mappedBy = "users", fetch = FetchType.EAGER)
     private Set<UserHobbyLink> userHobbyLinks = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "users_phonenumber",
-            joinColumns = @JoinColumn(name = "users_id"),
-            inverseJoinColumns = @JoinColumn(name = "phonenumber_id"))
-    private Set<Phonenumber> phonenumbers = new HashSet<>();
+    @OneToMany(mappedBy = "users", fetch = FetchType.EAGER)
+    private Set<UsersPhoneNumberLink> usersPhoneNumberLinks = new HashSet<>();
 
     public Users(String name, String password, Address address) {
         this.name = name;
@@ -44,8 +41,12 @@ public class Users {
         this.address = address;
     }
 
-    public void addPhonenumber(Phonenumber phone, Phonenumber.PhoneType type) {
-        phonenumbers.add(phone);
+    public void addUsersPhoneNumberLink(UsersPhoneNumberLink usersPhoneNumberLink) {
+        usersPhoneNumberLinks.add(usersPhoneNumberLink);
+    }
+
+    public void removeUsersPhoneNumberLink(UsersPhoneNumberLink usersPhoneNumberLink) {
+        usersPhoneNumberLinks.remove(usersPhoneNumberLink);
     }
 
     public void setAddress(Address address) {

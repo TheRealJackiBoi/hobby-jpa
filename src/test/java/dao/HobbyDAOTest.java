@@ -16,7 +16,7 @@ class HobbyDAOTest {
 
     @BeforeAll
     static void setUp() {
-        emf = HibernateConfig.getEntityManagerFactoryConfig("hobby_test");
+        emf = HibernateConfigTest.getEntityManagerFactoryConfig("hobby_test");
         em = emf.createEntityManager();
         dao = HobbyDAO.getInstance(emf);
 

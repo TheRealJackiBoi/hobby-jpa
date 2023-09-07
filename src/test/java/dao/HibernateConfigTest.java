@@ -12,7 +12,7 @@ import java.util.Properties;
 
 
 @NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
-public class HibernateConfig {
+public class HibernateConfigTest {
 
     private static EntityManagerFactory entityManagerFactory;
     private static String dbName;
@@ -64,6 +64,7 @@ public class HibernateConfig {
         configuration.addAnnotatedClass(model.Phonenumber.class);
         configuration.addAnnotatedClass(Users.class);
         configuration.addAnnotatedClass(model.UserHobbyLink.class);
+        configuration.addAnnotatedClass(model.UsersPhoneNumberLink.class);
     }
 
     public static EntityManagerFactory getEntityManagerFactoryConfig(String name) {

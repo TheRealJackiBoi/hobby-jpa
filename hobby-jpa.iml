@@ -5,7 +5,7 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <datasource-mapping>
-          <factory-entry name="hobby-jpa" value="9b07d24b-4147-44de-ba16-01797a270b95" />
+          <factory-entry name="hobby-jpa" />
         </datasource-mapping>
         <naming-strategy-map>
           <unit-entry name="hobby-jpa" />

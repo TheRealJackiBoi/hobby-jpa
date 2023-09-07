@@ -64,6 +64,7 @@ public class HibernateConfig {
         configuration.addAnnotatedClass(model.Phonenumber.class);
         configuration.addAnnotatedClass(model.Users.class);
         configuration.addAnnotatedClass(model.UserHobbyLink.class);
+        configuration.addAnnotatedClass(model.UsersPhoneNumberLink.class);
     }
 
     public static EntityManagerFactory getEntityManagerFactoryConfig(String name) {
