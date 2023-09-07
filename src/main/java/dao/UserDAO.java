@@ -70,14 +70,9 @@ public class UserDAO {
     }
 
     //[US-1] As a user I want to get all the information about a person
-    public UsersNameAddressHobbiesNumbersDTO retrieveAllUserInfo(Users users) {
+    public Users retrieveAllUserInfo(Users users) {
         try (var em = emf.createEntityManager()) {
-            TypedQuery<UsersNameAddressHobbiesNumbersDTO> q = em.createQuery("SELECT new dao.UsersNameAddressHobbiesNumbersDTO (u.name," +
-                    " u.address," +
-                    " u.userHobbyLinks," +
-                    " u.phonenumbers) " +
-                    "FROM Users u " +
-                    "WHERE u.id = :id", UsersNameAddressHobbiesNumbersDTO.class);
+            TypedQuery<Users> q = em.createQuery("SELECT u FROM Users u WHERE u.id = :id", Users.class);
             q.setParameter("id", users.getId());
             return q.getSingleResult();
         }
