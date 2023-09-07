@@ -44,7 +44,14 @@ public class Hobby {
 
     public enum HobbyType {
         INDOOR,
+        CONCERT,
+        COMBO,
+        OBSERVATION,
+        COLLECTING,
+        EDUCATIONAL,
         OUTDOOR,
+        NA;
+
 
     }
 
